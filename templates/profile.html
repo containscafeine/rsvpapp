@@ -19,5 +19,8 @@ Name: <input type="text" name="name">
 <ul><li> {{ item.name }}  </li></ul>
 {% endfor %}
 
+<form action="/csvdata" method='GET'>
+<button type="Submit" align="center" name="submit">Download CSV</button>
+</form>
 </body>
 </html>
