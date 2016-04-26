@@ -1,3 +1,4 @@
+import re
 import os
 import json
 import string
@@ -7,7 +8,6 @@ from flask import Flask, render_template, redirect, url_for, request,make_respon
 from pymongo import MongoClient
 from bson.json_util import dumps
 import socket
-
 app = Flask(__name__)
 
 client = MongoClient('mongodb',27017)
@@ -27,7 +27,10 @@ def rsvpdata():
 
 @app.route('/new', methods=['POST'])
 def new():
-	
+
+	if not re.match(r'[^@]+@[^@]+\.[^@]+', request.form['email']):
+		return render_template('errors/403.html'), 403
+
 	item_doc = {'name': request.form['name'],'email': request.form['email']
 }
 	db.rsvpdata.insert_one(item_doc)
